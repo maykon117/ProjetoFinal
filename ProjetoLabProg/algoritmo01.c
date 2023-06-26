@@ -42,7 +42,7 @@ int main(int argc, char *argv[]) {
     int q = atoi(argv[4]); // Converter o valor de q para inteiro
 
     aplicarFiltro(&inputImage, 3);
-    // Algoritmo 1: Geração de sub-imagens
+    //Geração de sub-imagens
     gerarSubImages(&inputImage, p, q, argv[2]);
 
     // Libera a memória alocada para a imagem de entrada
@@ -124,12 +124,12 @@ void writePGMImage(struct pgm *pio, const char *filename) {
 }
 
 void gerarSubImages(const struct pgm *inputImage, int subWidth, int subHeight, const char *outputDir) {
-    int numSubImages = 10; // Número de sub-imagens a serem geradas (exemplo)
-    srand(time(NULL)); // Inicializa a semente do gerador de números aleatórios
+    int numSubImages = 10; // Numero de sub-imagens
+    srand(time(NULL)); // gerador de numeros aleatorios
     
     for (int i = 1; i <= numSubImages; i++) {
 
-        // Gera as coordenadas aleatórriamente da sub-imagem
+        // Gera as coordenadas aleatorriamente da sub-imagem
         int startX = rand() % (inputImage->c - subWidth + 1);
         int startY = rand() % (inputImage->r - subHeight + 1);
 

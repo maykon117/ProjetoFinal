@@ -38,8 +38,8 @@ int main(int argc, char *argv[]) {
     struct pgm inputImage;
     readPGMImage(&inputImage, argv[1]);
 
-    int p = atoi(argv[3]); // Converter o valor de p para inteiro
-    int q = atoi(argv[4]); // Converter o valor de q para inteiro
+    int p = atoi(argv[3]); // valor p 
+    int q = atoi(argv[4]); // valor q
 
     aplicarFiltro(&inputImage, 3);
     //Geração de sub-imagens
@@ -140,6 +140,7 @@ void gerarSubImages(const struct pgm *inputImage, int subWidth, int subHeight, c
         subImage.c = subWidth;
         subImage.r = subHeight;
         subImage.mv = inputImage->mv;
+        
         //Destinado um espaço de memoria para armazenar os valores dos pixels da minha sub-imagem
         //O tamanho é determinado pela dimensão da sub-imagem
         subImage.pData = (unsigned char*)malloc(subWidth * subHeight * sizeof(unsigned char));

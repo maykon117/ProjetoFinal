@@ -111,6 +111,8 @@ void readPGMImage(struct pgm *pio, const char *filename) {
 
 
 void buscarSubImagem(const struct pgm *inputImage, const char *subImageDir, const char *outputFile) {
+    //verificação do arquivo
+    //caso não ache nada ele retorna o erro
     FILE *fp;
 
     if (!(fp = fopen(outputFile, "w"))) {
@@ -123,9 +125,14 @@ void buscarSubImagem(const struct pgm *inputImage, const char *subImageDir, cons
     d = opendir(subImageDir);
 
     if (d) {
+        //verifica se abriu corretamente "abre o loop" para cada interação a função "readdir" chama 
+        // o proximo arquivo do diretorio, se for NULL o loop encerra
         while ((dir = readdir(d)) != NULL) {
-            if (dir->d_type == DT_REG) { // Verifica se é um arquivo regular
-                if (strstr(dir->d_name, ".pgm") != NULL) { // Verifica se é um arquivo PGM
+            if (dir->d_type == DT_REG) { // Verifica se o arquivo não é um link ou algo do tipo
+                
+                // Verifica se é um arquivo PGM
+                if (strstr(dir->d_name, ".pgm") != NULL) { 
+                    
                     // Lê a sub-imagem do arquivo
                     char subImageFile[100];
                     sprintf(subImageFile, "%s/%s", subImageDir, dir->d_name);
@@ -142,9 +149,10 @@ void buscarSubImagem(const struct pgm *inputImage, const char *subImageDir, cons
                 }
             }
         }
+        //fecha o loop
         closedir(d);
     }
-
+    //garantia de que não a nada mais pra fazer
     fclose(fp);
 }
 

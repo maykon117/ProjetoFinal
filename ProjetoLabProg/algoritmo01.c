@@ -126,7 +126,8 @@ void writePGMImage(struct pgm *pio, const char *filename) {
 void gerarSubImages(const struct pgm *inputImage, int subWidth, int subHeight, const char *outputDir) {
     int numSubImages = 10; // Numero de sub-imagens
     srand(time(NULL)); // gerador de numeros aleatorios
-    
+
+        //Gerar a quantidade de Sub-imagens definida acima
     for (int i = 1; i <= numSubImages; i++) {
 
         // Gera as coordenadas aleatorriamente da sub-imagem
@@ -139,15 +140,19 @@ void gerarSubImages(const struct pgm *inputImage, int subWidth, int subHeight, c
         subImage.c = subWidth;
         subImage.r = subHeight;
         subImage.mv = inputImage->mv;
+        //Destinado um espaço de memoria para armazenar os valores dos pixels da minha sub-imagem
+        //O tamanho é determinado pela dimensão da sub-imagem
         subImage.pData = (unsigned char*)malloc(subWidth * subHeight * sizeof(unsigned char));
 
         // Copia os valores dos pixels da sub-imagem a partir da imagem de entrada
+        //percorre cada posição referente a minha imagem de entrada
         for (int y = 0; y < subHeight; y++) {
             for (int x = 0; x < subWidth; x++) {
                 int inputX = startX + x;
                 int inputY = startY + y;
                 int inputIndex = inputY * inputImage->c + inputX;
                 int subIndex = y * subWidth + x;
+                //Os valores dos pixels são copiados de input para subimage
                 subImage.pData[subIndex] = inputImage->pData[inputIndex];
             }
         }
@@ -159,6 +164,7 @@ void gerarSubImages(const struct pgm *inputImage, int subWidth, int subHeight, c
 
         // Libera a memória alocada para a sub-imagem
         free(subImage.pData);
+        //O processo vai se repetir varias vezes até cehgar no numero desejado de sub-imagens
     }
 }
 void aplicarFiltro(struct pgm *inputImage, int janela) {
@@ -166,17 +172,27 @@ void aplicarFiltro(struct pgm *inputImage, int janela) {
     int imageHeight = inputImage->r;
     unsigned char *filteredData = (unsigned char*)malloc(imageWidth * imageHeight * sizeof(unsigned char));
 
+    //percorrer as linhas de x e y
+    //isso converte as coordenadas de x e y em um inico indice para acesar o valor do pixel na matriz
     for (int y = 0; y < imageHeight; y++) {
         for (int x = 0; x < imageWidth; x++) {
             int pixelIndex = y * imageWidth + x;
             int sum = 0;
             int count = 0;
 
+            //O indice do pixel atual é calculado
+            //percorre cada pixel vizinho dentro da janela
+            //janela = 3
             for (int j = -janela / 2; j <= janela / 2; j++) {
                 for (int i = -janela / 2; i <= janela / 2; i++) {
+                    
+                    //Variaveis que serão usadas para calcular a media dos pixels vizinhos
                     int vX = x + i;
                     int vY = y + j;
-                        //valor do vizinho X e Y
+                    
+                    //valor do vizinho X e Y
+                    //Verifica se as coordenadas do vizinho estão dentro do limite da imagem
+                    //isso garante que o vizinho esteja dentro da imagem
                     if (vX >= 0 && vX < imageWidth && vY >= 0 && vY < imageHeight) {
                         int vIndex = vY * imageWidth + vX;
                         sum += inputImage->pData[vIndex];

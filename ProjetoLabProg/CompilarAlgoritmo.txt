@@ -1,0 +1,11 @@
+compilar algoritmo 01 
+
+<imagemEntrada.pgm> <diretorioSubImagens> <arquivoSaida.txt>
+
+bird.pgm "C:\\Users\\Maykon Jordson\Desktop\\LabProgramacao-main\\ProjetoLabProg\\"
+
+compilar algoritmo 02
+
+<imagemEntrada.pgm> <diretorioSubImagens> <p> <q>
+
+subimage1.pgm "C:\\Users\\Maykon Jordson\\Desktop\\LabProgramacao-main\\ProjetoLabProg\\" 100 100
